@@ -1,5 +1,5 @@
 import {Context} from "@nuxt/types";
-import {Sentc} from "@sentclose/sentc";
+import Sentc from "@sentclose/sentc";
 
 /**
  * It is important to init the user in a client plugin, because ssr on true can't handle import.meta.url
@@ -10,9 +10,9 @@ export default async function({store}: Context) {
 		return;
 	}
 
-	const init = store.getters["user/User/isInit"];
+	const is_init = store.getters["user/User/isInit"];
 
-	if (init) {
+	if (is_init) {
 		return;
 	}
 
