@@ -37,7 +37,9 @@ const config: NuxtConfig = {
 	// Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
 	plugins: [
 		"~/plugins/axios-accessor",
-		{src: "~/plugins/getUser.ts", mode: "client"}
+		{src: "~/plugins/getUser.ts", mode: "client"},
+		//important that this comes after getUser because we need the user to get the groups
+		{src: "~/plugins/getGroup.ts", mode: "client"}
 	],
 
 	// Auto import components: https://go.nuxtjs.dev/config-components
@@ -95,20 +97,9 @@ const config: NuxtConfig = {
 	build: {
 		postcss: false,
 
-		//use this babel plugin to change the import
-		babel: {
-			plugins: [
-				[
-					"babel-plugin-bundled-import-meta",
-					{
-						mappings: {
-							node_modules: "/assets"
-						},
-						bundleDir: wasmOutDir,
-						importStyle: "cjs"
-					}
-				]
-			]
+		extend(config) {
+			// @ts-ignore
+			config.resolve.mainFields = ["main"];
 		},
 
 		//copy the wasm file to your static dir to serve it from the server
