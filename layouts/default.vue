@@ -66,7 +66,7 @@ import {Getter} from "nuxt-property-decorator";
 })
 export default class extends Vue
 {
-	private clipped = false;
+	private clipped = true;
 	private drawer = false;
 	private fixed = false;
 

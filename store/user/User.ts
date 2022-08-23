@@ -3,7 +3,7 @@
  * @since 2022/08/20
  */
 import {Module, VuexModule, Mutation, Action} from "vuex-module-decorators";
-import {Sentc, User as SentcUser} from "@sentclose/sentc/lib";
+import {Sentc, User as SentcUser} from "@sentclose/sentc";
 
 @Module({
 	stateFactory: true
@@ -57,7 +57,8 @@ export default class User extends VuexModule
 		const user = await Sentc.init({
 			// @ts-ignore -> env must be set
 			app_token: process.env.NUXT_ENV_APP_PUBLIC_TOKEN,
-			base_url: process.env.NUXT_ENV_APP_SECRET_TOKEN
+			base_url: process.env.NUXT_ENV_BASE_URL,
+			wasm_path: "/sentc_wasm_bg.wasm"
 		});
 
 		this.context.commit("setInit", true);
