@@ -36,6 +36,8 @@ const config: NuxtConfig = {
 
 	// Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
 	plugins: [
+		"~/plugins/axios-accessor",
+		{src: "~/plugins/getUser.ts", mode: "client"}
 	],
 
 	// Auto import components: https://go.nuxtjs.dev/config-components
@@ -92,6 +94,8 @@ const config: NuxtConfig = {
 	// Build Configuration: https://go.nuxtjs.dev/config-build
 	build: {
 		postcss: false,
+
+		//use this babel plugin to change the import
 		babel: {
 			plugins: [
 				[
@@ -107,6 +111,7 @@ const config: NuxtConfig = {
 			]
 		},
 
+		//copy the wasm file to your static dir to serve it from the server
 		plugins: [
 			// eslint-disable-next-line new-cap
 			new copyWebpackPlugin({
