@@ -58,6 +58,8 @@ typings/
 # Yarn Integrity file
 .yarn-integrity
 
+sentc_wasm_bg.wasm
+
 # dotenv environment variables file
 .env
 

@@ -1,9 +1,16 @@
 import colors from "vuetify/es5/util/colors";
 import {NuxtConfig} from "@nuxt/types";
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const path = require("path");
+const wasmOutDir = path.resolve(__dirname, "../../../sdk/implementation/js/sentc_wasm/pkg");
+
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const copyWebpackPlugin = require("copy-webpack-plugin");
+
 const config: NuxtConfig = {
 	// Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
-	ssr: false,
+	ssr: true,
 
 	// Target: https://go.nuxtjs.dev/config-target
 	target: "static",
@@ -65,7 +72,7 @@ const config: NuxtConfig = {
 
 	// Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
 	vuetify: {
-		customVariables: ["~/assets/variables.scss"],
+		//customVariables: ["~/assets/variables.scss"],
 		theme: {
 			dark: true,
 			themes: {
@@ -84,14 +91,33 @@ const config: NuxtConfig = {
 
 	// Build Configuration: https://go.nuxtjs.dev/config-build
 	build: {
-		extend(config)
-		{
-			config.module.rules.push({
-				test: /\.wasm$/,
-				type: "javascript/auto",
-				loader: "file-loader"
-			});
-		}
+		postcss: false,
+		babel: {
+			plugins: [
+				[
+					"babel-plugin-bundled-import-meta",
+					{
+						mappings: {
+							node_modules: "/assets"
+						},
+						bundleDir: wasmOutDir,
+						importStyle: "cjs"
+					}
+				]
+			]
+		},
+
+		plugins: [
+			// eslint-disable-next-line new-cap
+			new copyWebpackPlugin({
+				patterns: [
+					{
+						from: wasmOutDir + "/sentc_wasm_bg.wasm",
+						to: path.resolve(__dirname, "static")
+					}
+				]
+			})
+		]
 	}
 };
 
