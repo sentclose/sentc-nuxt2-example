@@ -21,8 +21,8 @@
     "vue-server-renderer": "^2.6.14",
     "vue-template-compiler": "^2.6.14",
     "vuetify": "^2.6.1",
-    "webpack": "^4.46.0",
-    "@sentclose/sentc": "file:../../../sdk/implementation/js/sentc_js"
+    "@sentclose/sentc": "file:../../../sdk/implementation/js/sentc_js",
+    "zxcvbn": "^4.4.2"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.16.3",
@@ -32,6 +32,7 @@
     "@nuxtjs/eslint-config-typescript": "^8.0.0",
     "@nuxtjs/eslint-module": "^3.0.2",
     "@nuxtjs/vuetify": "^1.12.3",
+    "@types/zxcvbn": "^4.4.1",
     "copy-webpack-plugin": "^6.4.1",
     "eslint": "^8.4.1",
     "eslint-plugin-nuxt": "^3.1.0",
