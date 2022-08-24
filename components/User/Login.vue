@@ -1,5 +1,5 @@
 <template>
-	<v-form @submit.prevent="login">
+	<v-form @submit.prevent="internallyLogin">
 		<v-card max-width="500">
 			<v-card-title>
 				<h1 class="display-1">Login</h1>
@@ -47,16 +47,23 @@ export default class Login extends Vue
 	@Mutation("user/User/setLoginStatus")
 	private setLoginStatus: (status: boolean) => void;
 
-	public async login()
+	private internallyLogin()
 	{
-		if (!this.username || !this.password) {
+		return this.login(this.username, this.password);
+	}
+
+	public async login(username: string, password: string)
+	{
+		if (!username || !password) {
 			console.error("Not the right data");
 		}
 
-		const user = await Sentc.login(this.username, this.password);
+		const user = await Sentc.login(username, password);
 
 		this.setUser(user);
 		this.setLoginStatus(true);
+
+		this.$emit("loginDone", true);
 	}
 }
 </script>
