@@ -1,13 +1,6 @@
 import colors from "vuetify/es5/util/colors";
 import {NuxtConfig} from "@nuxt/types";
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const path = require("path");
-const wasmOutDir = path.resolve(__dirname, "node_modules/sentc_wasm");
-
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const copyWebpackPlugin = require("copy-webpack-plugin");
-
 const config: NuxtConfig = {
 	// Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
 	ssr: true,
@@ -50,7 +43,8 @@ const config: NuxtConfig = {
 		// https://go.nuxtjs.dev/typescript
 		"@nuxt/typescript-build",
 		// https://go.nuxtjs.dev/vuetify
-		"@nuxtjs/vuetify"
+		"@nuxtjs/vuetify",
+		"~/nuxt.build.ts"
 	],
 
 	// Modules: https://go.nuxtjs.dev/config-modules
@@ -100,20 +94,7 @@ const config: NuxtConfig = {
 		extend(config) {
 			// @ts-ignore
 			config.resolve.mainFields = ["main"];
-		},
-
-		//copy the wasm file to your static dir to serve it from the server
-		plugins: [
-			// eslint-disable-next-line new-cap
-			new copyWebpackPlugin({
-				patterns: [
-					{
-						from: wasmOutDir + "/sentc_wasm_bg.wasm",
-						to: path.resolve(__dirname, "static")
-					}
-				]
-			})
-		]
+		}
 	}
 };
 

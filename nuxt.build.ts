@@ -1,0 +1,20 @@
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const path = require("path");
+const wasmOutDir = path.resolve(__dirname, "node_modules/sentc_wasm");
+
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const copyWebpackPlugin = require("copy-webpack-plugin");
+
+export default function() {
+	this.extendBuild(({plugins}) => {
+		// eslint-disable-next-line new-cap
+		plugins.push(new copyWebpackPlugin({
+			patterns: [
+				{
+					from: wasmOutDir + "/sentc_wasm_bg.wasm",
+					to: path.resolve(__dirname, "static")
+				}
+			]
+		}));
+	});
+}
