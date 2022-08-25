@@ -3,7 +3,7 @@ import {NuxtConfig} from "@nuxt/types";
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const path = require("path");
-const wasmOutDir = path.resolve(__dirname, "../../../sdk/implementation/js/sentc_wasm/pkg");
+const wasmOutDir = path.resolve(__dirname, "node_modules/sentc_wasm");
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const copyWebpackPlugin = require("copy-webpack-plugin");
