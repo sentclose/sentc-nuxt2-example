@@ -45,6 +45,12 @@
 				<v-btn text @click="loginDialog = true"><v-icon small left>mdi-login</v-icon> Sign In</v-btn>
 				<v-btn text @click="registerDialog = true"><v-icon small left>mdi-account-plus</v-icon>Sign Up</v-btn>
 			</v-toolbar-items>
+
+			<v-toolbar-items v-else>
+				<v-btn text @click="changePwDialog = true"><v-icon small left>mdi-login</v-icon> Change password</v-btn>
+				<v-btn text @click="resetPasswordDialog = true"><v-icon small left>mdi-login</v-icon> Reset password</v-btn>
+				<v-btn text @click="userDeleteDialog = true"><v-icon small left>mdi-login</v-icon>Delete user</v-btn>
+			</v-toolbar-items>
 		</v-app-bar>
 
 		<v-main>
@@ -54,6 +60,18 @@
 
 			<v-dialog v-model="registerDialog" max-width="500">
 				<Register @registerDone="registerDialog = false" />
+			</v-dialog>
+
+			<v-dialog v-model="changePwDialog" max-width="500">
+				<ChangePw @changeDone="changePwDialog = false" />
+			</v-dialog>
+
+			<v-dialog v-model="resetPasswordDialog" max-width="500">
+				<ResetPw @changeDone="resetPasswordDialog = false" />
+			</v-dialog>
+
+			<v-dialog v-model="userDeleteDialog" max-width="500">
+				<Delete @changeDone="userDeleteDialog = false" />
 			</v-dialog>
 
 			<v-container>
@@ -76,11 +94,14 @@ import Component from "vue-class-component";
 import {Getter} from "nuxt-property-decorator";
 import Login from "~/components/User/Login.vue";
 import Register from "~/components/User/Register.vue";
+import ChangePw from "~/components/User/ChangePw.vue";
+import ResetPw from "~/components/User/ResetPw.vue";
+import Delete from "~/components/User/Delete.vue";
 
 @Component({
 	name: "DefaultLayout",
 	// eslint-disable-next-line @typescript-eslint/naming-convention
-	components: {Register, Login}
+	components: {Delete, ResetPw, ChangePw, Register, Login}
 })
 export default class extends Vue
 {
@@ -109,5 +130,8 @@ export default class extends Vue
 
 	private loginDialog = false;
 	private registerDialog = false;
+	private changePwDialog = false;
+	private resetPasswordDialog = false;
+	private userDeleteDialog = false;
 }
 </script>
