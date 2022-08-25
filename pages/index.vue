@@ -2,37 +2,46 @@
 	<v-row justify="center" align="center">
 		<v-col cols="12" sm="8" md="6">
 			<v-card class="logo py-4 d-flex justify-center">
-				<NuxtLogo />
-				<VuetifyLogo />
+				<SentcLogo />
 			</v-card>
 			<v-card>
 				<v-card-title class="headline">
-					Welcome to the Vuetify + Nuxt.js template
+					Welcome to the demo of sentc for nuxt
 				</v-card-title>
 				<v-card-text>
-					<p>Vuetify is a progressive Material Design component framework for Vue.js. It was designed to empower developers to create amazing applications.</p>
+					<p>We are using nuxt 2 with vuetify and the newest version of sentc.</p>
+
 					<p>
-						For more information on Vuetify, check out the <a
-							href="https://vuetifyjs.com"
+						Sentc is a encryption sdk which provides end-to-end encryption, user identity and authentication
+						and much more out of the box with a few lines of code.
+
+						State of the art encryption and best practice user management.
+					</p>
+
+					<p>
+						Create a new user account on sign up btn in the right corner or login with a user account.
+
+						When you are logged in you can create and manage groups, or invite more user to your group.
+
+						Have fun to explore our features.
+					</p>
+
+					<v-divider class="mb-3" />
+
+					<p>
+						For more information on Sentc, check out the <a
+							href="https://sentclose.com"
 							target="_blank"
 							rel="noopener noreferrer"
 						>
-							documentation
+							website
 						</a>.
 					</p>
+
 					<p>
-						If you have questions, please join the official <a
-							href="https://chat.vuetifyjs.com/"
-							target="_blank"
-							rel="noopener noreferrer"
-							title="chat"
-						>
-							discord
-						</a>.
-					</p>
-					<p>
-						Find a bug? Report it on the github <a
-							href="https://github.com/vuetifyjs/vuetify/issues"
+						Find a bug on this example? Report it on the gitlab
+						<a
+							href="https://gitlab.com/sentclose/sentc/sdk-examples/nuxt2/-/issues"
 							target="_blank"
 							rel="noopener noreferrer"
 							title="contribute"
@@ -40,44 +49,34 @@
 							issue board
 						</a>.
 					</p>
-					<p>Thank you for developing with Vuetify and I look forward to bringing more exciting features in the future.</p>
+
+					<p>
+						Find a bug on sentc? Report it on the main gitlab
+						<a
+							href="https://gitlab.com/sentclose/sentc/sdk-implementations/sentc-javascript/-/issues"
+							target="_blank"
+							rel="noopener noreferrer"
+							title="contribute"
+						>
+							issue board
+						</a>.
+					</p>
+
+					<p>Thank you for using sentc and We are looking forward to bringing more exciting features in the future.</p>
 					<div class="text-xs-right">
-						<em><small>&mdash; John Leider</small></em>
+						<em><small>&mdash; Jörn Heinemann and Richard Dietz</small></em>
 					</div>
-					<hr class="my-3">
-					<a
-						href="https://nuxtjs.org/"
-						target="_blank"
-						rel="noopener noreferrer"
-					>
-						Nuxt Documentation
-					</a>
-					<br>
-					<a
-						href="https://github.com/nuxt/nuxt.js"
-						target="_blank"
-						rel="noopener noreferrer"
-					>
-						Nuxt GitHub
-					</a>
 				</v-card-text>
-				<v-card-actions>
-					<v-spacer />
-					<v-btn
-						color="primary"
-						nuxt
-						to="/inspire"
-					>
-						Continue
-					</v-btn>
-				</v-card-actions>
 			</v-card>
 		</v-col>
 	</v-row>
 </template>
 
 <script>
+import SentcLogo from "@/components/SentcLogo";
 export default {
-	name: "IndexPage"
+	name: "IndexPage",
+	// eslint-disable-next-line @typescript-eslint/naming-convention
+	components: {SentcLogo}
 };
 </script>
