@@ -2,6 +2,7 @@
  * Use a build tool to copy the wasm file to the static dir.
  *
  * When using nuxt config, then the copy plugin is required even for prod env.
+ * But in a build module -> this is only required for build times
  */
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
