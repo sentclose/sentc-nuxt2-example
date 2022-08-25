@@ -47,9 +47,7 @@
 			</v-toolbar-items>
 
 			<v-toolbar-items v-else>
-				<v-btn text @click="changePwDialog = true"><v-icon small left>mdi-login</v-icon> Change password</v-btn>
-				<v-btn text @click="resetPasswordDialog = true"><v-icon small left>mdi-login</v-icon> Reset password</v-btn>
-				<v-btn text @click="userDeleteDialog = true"><v-icon small left>mdi-login</v-icon>Delete user</v-btn>
+				<v-btn icon @click.stop="right_drawer = !right_drawer"><v-icon>mdi-menu</v-icon></v-btn>
 			</v-toolbar-items>
 		</v-app-bar>
 
@@ -79,6 +77,38 @@
 			</v-container>
 		</v-main>
 
+		<v-navigation-drawer v-model="right_drawer" right temporary fixed>
+			<v-list>
+				<v-list-item @click="changePwDialog = true">
+					<v-list-item-action>
+						<v-icon>mdi-account</v-icon>
+					</v-list-item-action>
+					<v-list-item-title>Change password</v-list-item-title>
+				</v-list-item>
+
+				<v-list-item @click="resetPasswordDialog = true">
+					<v-list-item-action>
+						<v-icon>mdi-account</v-icon>
+					</v-list-item-action>
+					<v-list-item-title>Reset password</v-list-item-title>
+				</v-list-item>
+
+				<v-list-item @click="userDeleteDialog = true">
+					<v-list-item-action>
+						<v-icon>mdi-account</v-icon>
+					</v-list-item-action>
+					<v-list-item-title>Delete</v-list-item-title>
+				</v-list-item>
+
+				<v-list-item @click="logOut()">
+					<v-list-item-action>
+						<v-icon>mdi-logout</v-icon>
+					</v-list-item-action>
+					<v-list-item-title>Logout</v-list-item-title>
+				</v-list-item>
+			</v-list>
+		</v-navigation-drawer>
+
 		<v-footer
 			:absolute="!fixed"
 			app
@@ -91,12 +121,13 @@
 <script lang="ts">
 import Vue from "vue";
 import Component from "vue-class-component";
-import {Getter} from "nuxt-property-decorator";
+import {Getter, Mutation} from "nuxt-property-decorator";
 import Login from "~/components/User/Login.vue";
 import Register from "~/components/User/Register.vue";
 import ChangePw from "~/components/User/ChangePw.vue";
 import ResetPw from "~/components/User/ResetPw.vue";
 import Delete from "~/components/User/Delete.vue";
+import {User} from "@sentclose/sentc";
 
 @Component({
 	name: "DefaultLayout",
@@ -107,6 +138,7 @@ export default class extends Vue
 {
 	private clipped = true;
 	private drawer = false;
+	private right_drawer = false;
 	private fixed = false;
 
 	private items = [
@@ -117,7 +149,7 @@ export default class extends Vue
 		},
 		{
 			icon: "mdi-chart-bubble",
-			title: "Groups",
+			title: "Create group",
 			to: "/group"
 		}
 	];
@@ -128,10 +160,30 @@ export default class extends Vue
 	@Getter("user/User/getLoggedIn")
 	private is_logged_in: boolean | undefined;
 
+	@Getter("user/User/getUser")
+	private getUser: User;
+
+	@Mutation("user/User/setLoginStatus")
+	private setLoginStatus: (status: boolean) => void;
+
 	private loginDialog = false;
 	private registerDialog = false;
 	private changePwDialog = false;
 	private resetPasswordDialog = false;
 	private userDeleteDialog = false;
+
+	private async logOut()
+	{
+		const user = this.getUser;
+
+		if (!user) {
+			//not logged in
+			return;
+		}
+
+		await user.logOut();
+
+		this.setLoginStatus(false);
+	}
 }
 </script>
