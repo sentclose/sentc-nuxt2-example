@@ -4,6 +4,7 @@
  */
 import {Module, VuexModule, Mutation} from "vuex-module-decorators";
 import {User as SentcUser} from "@sentclose/sentc";
+import {GroupList} from "@sentclose/sentc/lib/Enities";
 
 @Module({
 	stateFactory: true
@@ -17,6 +18,8 @@ export default class User extends VuexModule
 
 	private init = false;
 
+	private user_group_list: GroupList[] = [];
+
 	get getLoggedIn() {
 		return this.logged_in;
 	}
@@ -27,6 +30,10 @@ export default class User extends VuexModule
 
 	get isInit() {
 		return this.init;
+	}
+
+	get userGroupList() {
+		return this.user_group_list;
 	}
 
 	@Mutation
@@ -45,5 +52,17 @@ export default class User extends VuexModule
 	public setLoginStatus(status: boolean)
 	{
 		this.logged_in = status;
+	}
+
+	@Mutation
+	public setUserGroupList(list: GroupList[])
+	{
+		this.user_group_list = list;
+	}
+
+	@Mutation
+	public pushUserGroupList(items: GroupList[])
+	{
+		this.user_group_list.push(...items);
 	}
 }
