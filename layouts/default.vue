@@ -22,6 +22,34 @@
 						<v-list-item-title v-text="item.title" />
 					</v-list-item-content>
 				</v-list-item>
+
+				<!--Show the group list-->
+
+				<client-only>
+					<v-list-item
+						v-for="(item, i) in user_group_list"
+						:key="i"
+						:to="'/group/' + item.group_id"
+						router
+						exact
+					>
+						<v-list-item-action>
+							<v-icon>mdi-chart-bubble</v-icon>
+						</v-list-item-action>
+						<v-list-item-content>
+							<v-list-item-title v-text="item.group_id" />
+						</v-list-item-content>
+					</v-list-item>
+
+					<v-list-item v-if="is_logged_in" @click="getUserGroupList">
+						<v-list-item-action>
+							<v-icon>mdi-plus</v-icon>
+						</v-list-item-action>
+						<v-list-item-content>
+							<v-list-item-title v-text="'Fetch more groups'" />
+						</v-list-item-content>
+					</v-list-item>
+				</client-only>
 			</v-list>
 		</v-navigation-drawer>
 
@@ -128,6 +156,7 @@ import ChangePw from "~/components/User/ChangePw.vue";
 import ResetPw from "~/components/User/ResetPw.vue";
 import Delete from "~/components/User/Delete.vue";
 import {User} from "@sentclose/sentc";
+import {GroupList} from "@sentclose/sentc/lib/Enities";
 
 @Component({
 	name: "DefaultLayout",
@@ -172,6 +201,8 @@ export default class extends Vue
 	private resetPasswordDialog = false;
 	private userDeleteDialog = false;
 
+	private user_group_list: GroupList[] = [];
+
 	private async logOut()
 	{
 		const user = this.getUser;
@@ -184,6 +215,22 @@ export default class extends Vue
 		await user.logOut();
 
 		this.setLoginStatus(false);
+	}
+
+	private async getUserGroupList()
+	{
+		const user = this.getUser;
+
+		if (!user) {
+			//not logged in
+			return;
+		}
+
+		const last_item = this.user_group_list[this.user_group_list.length - 1] ?? null;
+
+		const list = await user.getGroups(last_item);
+
+		this.user_group_list.push(...list);
 	}
 }
 </script>
