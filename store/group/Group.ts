@@ -3,8 +3,8 @@
  * @since 2022/08/23
  */
 
-import {Module, VuexModule, Mutation} from "vuex-module-decorators";
-import {Group as SentcGroup} from "@sentclose/sentc";
+import {Module, VuexModule, Mutation, Action} from "vuex-module-decorators";
+import {Group as SentcGroup, User} from "@sentclose/sentc";
 
 export interface GroupData {
 	sentc: SentcGroup
@@ -58,5 +58,26 @@ export default class Group extends VuexModule
 				sentc: group
 			});
 		}
+	}
+
+	@Action({rawError: true})
+	public async fetchGroup(group_id: string)
+	{
+		if (process.server) {
+			this.context.commit("setGroupsToFetch", [group_id]);
+			return;
+		}
+
+		const user: User = this.context.rootGetters["user/User/getUser"];
+
+		if (!user) {
+			return;
+		}
+
+		const group = await user.getGroup(group_id);
+
+		this.context.commit("setGroups", [group]);
+
+		return this.context.getters["group"](group_id);
 	}
 }
