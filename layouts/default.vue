@@ -27,8 +27,8 @@
 
 				<client-only>
 					<v-list-item
-						v-for="(item, i) in user_group_list"
-						:key="i"
+						v-for="(item) in userGroupList"
+						:key="item.group_id"
 						:to="'/group/' + item.group_id"
 						router
 						exact
@@ -69,14 +69,14 @@
 			<v-toolbar-title v-text="title" />
 			<v-spacer />
 
-			<v-toolbar-items>
-				<client-only>
+			<client-only>
+				<v-toolbar-items>
 					<v-btn v-if="!is_logged_in" text @click="loginDialog = true"><v-icon small left>mdi-login</v-icon> Sign In</v-btn>
 					<v-btn v-if="!is_logged_in" text @click="registerDialog = true"><v-icon small left>mdi-account-plus</v-icon>Sign Up</v-btn>
 
 					<v-btn v-if="is_logged_in" icon @click.stop="right_drawer = !right_drawer"><v-icon>mdi-menu</v-icon></v-btn>
-				</client-only>
-			</v-toolbar-items>
+				</v-toolbar-items>
+			</client-only>
 		</v-app-bar>
 
 		<v-main>
@@ -192,16 +192,20 @@ export default class extends Vue
 	@Getter("user/User/getUser")
 	private getUser: User;
 
+	@Getter("user/User/userGroupList")
+	private userGroupList: GroupList[];
+
 	@Mutation("user/User/setLoginStatus")
 	private setLoginStatus: (status: boolean) => void;
+
+	@Mutation("user/User/pushUserGroupList")
+	private pushUserGroupList: (items: GroupList[]) => void;
 
 	private loginDialog = false;
 	private registerDialog = false;
 	private changePwDialog = false;
 	private resetPasswordDialog = false;
 	private userDeleteDialog = false;
-
-	private user_group_list: GroupList[] = [];
 
 	private async logOut()
 	{
@@ -226,11 +230,11 @@ export default class extends Vue
 			return;
 		}
 
-		const last_item = this.user_group_list[this.user_group_list.length - 1] ?? null;
+		const last_item = this.userGroupList[this.userGroupList.length - 1] ?? null;
 
 		const list = await user.getGroups(last_item);
 
-		this.user_group_list.push(...list);
+		this.pushUserGroupList(list);
 	}
 }
 </script>
