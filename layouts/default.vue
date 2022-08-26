@@ -41,13 +41,13 @@
 			<v-toolbar-title v-text="title" />
 			<v-spacer />
 
-			<v-toolbar-items v-if="!is_logged_in">
-				<v-btn text @click="loginDialog = true"><v-icon small left>mdi-login</v-icon> Sign In</v-btn>
-				<v-btn text @click="registerDialog = true"><v-icon small left>mdi-account-plus</v-icon>Sign Up</v-btn>
-			</v-toolbar-items>
+			<v-toolbar-items>
+				<client-only>
+					<v-btn v-if="!is_logged_in" text @click="loginDialog = true"><v-icon small left>mdi-login</v-icon> Sign In</v-btn>
+					<v-btn v-if="!is_logged_in" text @click="registerDialog = true"><v-icon small left>mdi-account-plus</v-icon>Sign Up</v-btn>
 
-			<v-toolbar-items v-else>
-				<v-btn icon @click.stop="right_drawer = !right_drawer"><v-icon>mdi-menu</v-icon></v-btn>
+					<v-btn v-if="is_logged_in" icon @click.stop="right_drawer = !right_drawer"><v-icon>mdi-menu</v-icon></v-btn>
+				</client-only>
 			</v-toolbar-items>
 		</v-app-bar>
 
