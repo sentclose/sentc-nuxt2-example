@@ -20,8 +20,7 @@
 import Vue from "vue";
 import Component from "vue-class-component";
 import {Getter, Mutation} from "nuxt-property-decorator";
-import {Group, User} from "@sentclose/sentc";
-import {GroupList} from "@sentclose/sentc/lib/Enities";
+import {Group, User, GroupList} from "@sentclose/sentc";
 
 @Component
 export default class extends Vue

@@ -3,8 +3,7 @@
  * @since 2022/08/20
  */
 import {Module, VuexModule, Mutation} from "vuex-module-decorators";
-import {User as SentcUser} from "@sentclose/sentc";
-import {GroupList} from "@sentclose/sentc/lib/Enities";
+import {User as SentcUser, GroupList} from "@sentclose/sentc";
 
 @Module({
 	stateFactory: true

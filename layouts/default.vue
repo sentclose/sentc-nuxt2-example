@@ -155,8 +155,7 @@ import Register from "~/components/User/Register.vue";
 import ChangePw from "~/components/User/ChangePw.vue";
 import ResetPw from "~/components/User/ResetPw.vue";
 import Delete from "~/components/User/Delete.vue";
-import {User} from "@sentclose/sentc";
-import {GroupList} from "@sentclose/sentc/lib/Enities";
+import {User, GroupList} from "@sentclose/sentc";
 
 @Component({
 	name: "DefaultLayout",
