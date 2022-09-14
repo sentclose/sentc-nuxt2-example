@@ -14,15 +14,62 @@
 				<v-divider />
 
 				<v-card-actions>
+					<v-text-field v-model="member_id" style="max-width: 500px" label="New member" append-outer-icon="mdi-plus" @click:append-outer="addMember" />
+				</v-card-actions>
+
+				<v-card-actions>
 					<v-spacer />
 
 					<v-btn color="error" text @click="deleteGroup">Delete</v-btn>
 				</v-card-actions>
 			</client-only>
 		</v-card>
-		
+
+		<br>
+
+		<!--Encrypt a string-->
+
 		<v-card>
-			<!--TODO fetch the group content-->
+			<v-card-title>
+				<h3>Encrypt a text</h3>
+			</v-card-title>
+
+			<v-card-text>
+				<v-textarea v-model="text" label="Text" />
+			</v-card-text>
+
+			<v-card-actions>
+				<v-btn text @click="encrypt">encrypt</v-btn>
+			</v-card-actions>
+		</v-card>
+
+		<br>
+		<!--Decrypt a string-->
+
+		<v-card>
+			<v-card-title>
+				<h3>Decrypt a text</h3>
+			</v-card-title>
+
+			<v-card-text>
+				<v-textarea v-model="encrypted_text" label="Encrypted text" />
+			</v-card-text>
+
+			<v-card-actions>
+				<v-btn text @click="decrypt">decrypt</v-btn>
+			</v-card-actions>
+		</v-card>
+
+		<br>
+
+		<v-card>
+			<v-card-title>
+				<h3>Decrypted text</h3>
+			</v-card-title>
+
+			<v-card-text>
+				<v-textarea v-model="decrypted_text" label="decrypted text" />
+			</v-card-text>
 		</v-card>
 	</div>
 </template>
@@ -61,6 +108,12 @@ export default class extends Vue
 {
 	private group_id = "";
 
+	private member_id = "";
+
+	private text = "";
+	private encrypted_text = "";
+	private decrypted_text = "";
+
 	//vue won't listen for updates for this group. if updates are required then save the group data here
 	//@ts-ignore
 	private group: GroupData = "";
@@ -98,6 +151,33 @@ export default class extends Vue
 		this.removeUserGroup(this.group_id);
 
 		return this.$router.push("/group");
+	}
+
+	private async addMember()
+	{
+		if (this.member_id === "") {
+			return;
+		}
+
+		await this.group.sentc.inviteAuto(this.member_id);
+	}
+
+	private async encrypt()
+	{
+		if (this.text === "") {
+			return;
+		}
+
+		this.encrypted_text = await this.group.sentc.encryptString(this.text);
+	}
+
+	private async decrypt()
+	{
+		if (this.encrypted_text === "") {
+			return;
+		}
+
+		this.decrypted_text = await this.group.sentc.decryptString(this.encrypted_text);
 	}
 }
 </script>
