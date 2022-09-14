@@ -107,6 +107,12 @@
 
 		<v-navigation-drawer v-model="right_drawer" right temporary fixed>
 			<v-list>
+				<client-only>
+					<v-list-item v-if="is_logged_in">
+						<v-textarea v-model="getUser.user_data.user_id" label="Id" disabled />
+					</v-list-item>
+				</client-only>
+
 				<v-list-item @click="changePwDialog = true">
 					<v-list-item-action>
 						<v-icon>mdi-account</v-icon>
