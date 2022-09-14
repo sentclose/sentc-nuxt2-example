@@ -64,4 +64,15 @@ export default class User extends VuexModule
 	{
 		this.user_group_list.push(...items);
 	}
+
+	@Mutation
+	public removeGroup(id: string)
+	{
+		for (let i = 0; i < this.user_group_list.length; i++) {
+			if (this.user_group_list[i].group_id === id) {
+				this.user_group_list.splice(i, 1);
+				return;
+			}
+		}
+	}
 }
