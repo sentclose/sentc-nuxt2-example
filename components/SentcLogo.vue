@@ -1,14 +1,22 @@
 <template>
 	<img
-		class="vuetify-logo"
+		class="sentc-logo"
 		alt="Sentc Logo"
-		src="/SENTCLOSE.png"
+		src="/Sentc.png"
 	>
 </template>
 
 <style>
-.vuetify-logo {
-  height: auto;
-  width: 300px;
+.sentc-logo {
+  height: 170px;
+  width: 170px;
+  transform: rotateY(560deg);
+  animation: turn 3.5s ease-out forwards 1s;
+}
+
+@keyframes turn {
+  100% {
+    transform: rotateY(0deg);
+  }
 }
 </style>

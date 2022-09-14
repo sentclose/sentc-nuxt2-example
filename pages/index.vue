@@ -2,6 +2,7 @@
 	<v-row justify="center" align="center">
 		<v-col cols="12" sm="8" md="6">
 			<v-card class="logo py-4 d-flex justify-center">
+				<SentcloseLogo class="mr-2" />
 				<SentcLogo />
 			</v-card>
 			<v-card>
@@ -73,10 +74,11 @@
 </template>
 
 <script>
+import SentcloseLogo from "@/components/SentcloseLogo";
 import SentcLogo from "@/components/SentcLogo";
 export default {
 	name: "IndexPage",
 	// eslint-disable-next-line @typescript-eslint/naming-convention
-	components: {SentcLogo}
+	components: {SentcLogo, SentcloseLogo}
 };
 </script>
